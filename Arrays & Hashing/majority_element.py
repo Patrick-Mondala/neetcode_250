@@ -12,15 +12,22 @@ Constraints:
 -1,000,000,000 <= nums[i] <= 1,000,000,000
 '''
 
+# Boyer-Moore Voting Algorithm
 # Time Complexity: O(N) where N is the length of nums due to single pass through nums array
-# Space Complexity: O(N) where N is the length of nums due to storing up to N key-value pairs in the frequency map
+# Space Complexity: O(1) since we are using only a constant amount of extra space
 def majorityElement(nums: list[int]) -> int:
-    freqMap = defaultdict(int)
+    count = 0
+    majority = 0
 
     for num in nums:
-        freqMap[num] += 1
-
-    return max(freqMap, key=freqMap.get)
+        if count == 0:
+            majority = num
+        if majority == num:
+            count += 1
+        else:
+            count -= 1
+    
+    return majority
 
 # Test Cases
 assert majorityElement([5,5,1,1,1,5,5]) == 5
