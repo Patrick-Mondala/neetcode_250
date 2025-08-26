@@ -9,16 +9,21 @@ Constraints:
 0 <= k <= 100,000
 '''
 
-# Time Complexity: O(N) where N is the size of nums due to iterating over nums once
-# Space Complexity: O(N) where N is the size of nums due to potentially storing every num in nums in the seen map
+# Time Complexity: O(N) where N is the size of nums due to potentially iterating over the entire nums array
+# Space Complexity: O(min(N, K)) where K is the maximum size of our seen set window
 def containsNearbyDuplicate(nums: list[int], k: int) -> bool:
-    seen = {}
+    seen = set()
 
-    for i in range(len(nums)):
-        if nums[i] in seen:
-            if i - seen[nums[i]] <= k:
-                return True
-        seen[nums[i]] = i
+    l, r = 0, 0
+
+    while r < len(nums):
+        if r - l > k:
+            seen.remove(nums[l])
+            l += 1
+        if nums[r] in seen:
+            return True
+        seen.add(nums[r])
+        r += 1
 
     return False
 
