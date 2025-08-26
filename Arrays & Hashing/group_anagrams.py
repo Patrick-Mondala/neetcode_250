@@ -1,3 +1,5 @@
+from collections import defaultdict
+
 '''
 Group Anagrams
 Given an array of strings strs, group all anagrams together into sublists. You may return the output in any order.
@@ -11,18 +13,21 @@ Constraints:
 strs[i] is made up of lowercase English letters.
 '''
 
-# Time Complexity: O(N * M log M) where N is the number of strings in strs and M is the length of the longest string in strs
-# Space Complexity: O(N * M) where N is the number of strings in strs and M is the length of the longest string in strs 
+# Time Complexity: O(N * M) where N is the number of strings in strs and M is the length of the longest string in strs
+# due to iterating through each string and creating a frequency map for each string
+# Space Complexity: O(N * M) where N is the number of strings in strs and M is the length of the longest string in strs
+# due to storing all strings in the frequency map
 def groupAnagrams(strs: list[str]) -> list[list[str]]:
-    buckets = {} # sorted str, list[str]
-    
-    for i in range(len(strs)):
-        sorted_str = ''.join(sorted(strs[i]))
-        if sorted_str not in buckets:
-            buckets[sorted_str] = []
-        buckets[sorted_str].append(strs[i])
+    freqMaps = defaultdict(list) # (freqMap, list of anagrams)
 
-    return list(buckets.values())
+    for string in strs:
+        freqMap = [0] * 26
+
+        for char in string:
+            freqMap[ord(char) - ord('a')] += 1
+        freqMaps[tuple(freqMap)].append(string)
+
+    return list(freqMaps.values())
 
 # Test Cases
 assert groupAnagrams(["eat","tea","tan","ate","nat","bat"]) == [["eat","tea","ate"],["tan","nat"],["bat"]]
