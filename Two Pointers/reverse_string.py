@@ -10,6 +10,8 @@ Constraints:
 s[i] is a printable ascii character.
 '''
 
+# Time Complexity: O(N) where N is the length of s due to making a single pass over the s array
+# Space Complexity: O(1) because we don't store data in any datastructures
 def reverseString(s: list[str]) -> None:
     N = len(s)
 
