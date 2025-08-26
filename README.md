@@ -1,2 +1,2 @@
-# neetcode_250
-I solve the neetcode 250 list
+# neetcode 250
+Here are my neetcode 250 solves
