@@ -20,6 +20,8 @@ For operation "+", there will always be at least two previous scores on the reco
 For operations "C" and "D", there will always be at least one previous score on the record.
 '''
 
+# Time Complexity: O(N) where N is the length of operations due to iterating over operations once
+# Space Complexity: O(N) where N is the length of operations due to potentially storing every item in operations in the stack
 def calPoints(operations: list[str]) -> int:
     stack = []
 
