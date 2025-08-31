@@ -11,13 +11,21 @@ Constraints:
 nums contains distinct values sorted in ascending order.
 '''
 
-import bisect
-
 # Time Complexity: O(logN) where N is the length of nums
 # Space Complexity: O(1) due to using constant extra space
 def searchInsert(nums: list[int], target: int) -> int:
-    res = bisect.bisect_left(nums, target)
-    return res
+    l, r = 0, len(nums) - 1
+
+    while l <= r:
+        mid = l + ((r - l) // 2)
+        if nums[mid] == target:
+            return mid
+        if nums[mid] < target:
+            l = mid + 1
+        else:
+            r = mid - 1
+    
+    return r + 1
 
 # Test Cases
 assert searchInsert([-1,0,2,4,6,8], 5) == 4
