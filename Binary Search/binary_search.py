@@ -14,20 +14,12 @@ All the integers in nums are unique.
 '''
 
 # Time Complexity: O(logN) where N is the length of nums due to doing logN iterations of our search, cutting our search space in half between iterations
-# Space Complexity: O(1) due to using constant extra spaces 
+# Space Complexity: O(1) due to using constant extra space
+import bisect
+
 def search(nums: list[int], target: int) -> int:
-    l, r = 0, len(nums) - 1
-
-    while l <= r:
-        mid = (l + r) // 2
-        if nums[mid] == target:
-            return mid
-        if nums[mid] < target:
-            l = mid + 1
-        else:
-            r = mid - 1
-
-    return -1
+    res = bisect.bisect_left(nums, target)
+    return res if res < len(nums) and nums[res] == target else -1
 
 # Test Cases
 assert search([-1,0,2,4,6,8], 4) == 3
