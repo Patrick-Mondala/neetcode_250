@@ -25,7 +25,7 @@ def searchInsert(nums: list[int], target: int) -> int:
         else:
             r = mid - 1
     
-    return r + 1
+    return l
 
 # Test Cases
 assert searchInsert([-1,0,2,4,6,8], 5) == 4
