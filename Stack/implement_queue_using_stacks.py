@@ -21,32 +21,31 @@ All the calls to pop and peek are valid.
 Follow-up: Can you implement the queue such that each operation is amortized O(1) time complexity? In other words, performing n operations will take overall O(n) time even if one of those operations may take longer.
 '''
 
-# Time Complexity: O(1) due to using constant time for each operation
-# Space Complexity: O(1) due to using constant space to store the data. technically O(100) due to using an array of size 100 to store data with max 100 calls
+# Initalize/Push/Empty Time Complexity: O(1) due to using constant time for each operation
+# Peek/Pop Time Complexity: Amortized O(1) due to on average, will use constant time to pop or peek
+# Space Complexity: O(N) due to storing all elements of the queue in either stack1 or stack2
 class MyQueue:
     def __init__(self):
-        self.stack = [None for _ in range(100)]
-        self.head = self.tail = -1
+        self.stack1 = []
+        self.stack2 = []
 
     def push(self, x: int) -> None:
-        self.stack[self.tail + 1] = x
-        self.tail += 1
+        self.stack1.append(x)
 
     def pop(self) -> int:
-        if self.head == self.tail:
-            return
-        val = self.stack[self.head + 1]
-        self.stack[self.head + 1] = None
-        self.head += 1
-        return val
+        if not self.stack2:
+            while self.stack1:
+                self.stack2.append(self.stack1.pop())
+        return self.stack2.pop()
 
     def peek(self) -> int:
-        if self.head == self.tail:
-            return
-        return self.stack[self.head + 1]
+        if not self.stack2:
+            while self.stack1:
+                self.stack2.append(self.stack1.pop())
+        return self.stack2[-1]
 
     def empty(self) -> bool:
-        return self.head == self.tail
+        return not self.stack1 and not self.stack2
     
 # Test Cases
 queue = MyQueue()
