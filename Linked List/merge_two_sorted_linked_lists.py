@@ -29,15 +29,7 @@ def mergeTwoLists(list1: ListNode | None = None, list2: ListNode | None = None) 
             cur2 = cur2.next
         prev = prev.next
     
-    while cur1:
-        prev.next = cur1
-        prev = prev.next
-        cur1 = cur1.next
-    
-    while cur2:
-        prev.next = cur2
-        prev = prev.next
-        cur2 = cur2.next
+    prev.next = cur1 or cur2
 
     return sentinel.next
 
