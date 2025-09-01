@@ -26,3 +26,13 @@ def linked_list_to_list(head: ListNode | None = None) -> list:
         cur = cur.next
 
     return res
+
+def linked_list_to_list_of_nodes(head: ListNode | None = None) -> list:
+    res = []
+    cur = head
+
+    while cur:
+        res.append(cur)
+        cur = cur.next
+
+    return res
