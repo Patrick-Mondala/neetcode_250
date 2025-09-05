@@ -4,7 +4,37 @@ class TreeNode:
         self.left = left
         self.right = right
 
-def list_to_list_of_tree_nodes(arr):
+def binary_tree_to_list_notation(root: TreeNode | None = None) -> list[int]:
+    if not root:
+        return []
+
+    res = []
+    queue = MyQueue()
+    queue.push(root)
+    real_nodes = 1
+
+    while queue and real_nodes:
+        cur = queue.pop()
+        res.append(cur.val)
+
+        if cur.val:
+            real_nodes -= 1
+
+        if cur.left:
+            queue.push(cur.left)
+            real_nodes += 1
+        else:
+            queue.push(TreeNode())
+
+        if cur.right:
+            queue.push(cur.right)
+            real_nodes += 1
+        else:
+            queue.push(TreeNode())
+
+    return res
+
+def list_to_list_of_tree_nodes(arr: list | None = None) -> list[TreeNode]:
     res = []
 
     for val in arr:
@@ -23,7 +53,30 @@ def list_to_list_of_tree_nodes(arr):
     
     return res
 
-def list_to_binary_tree(arr):
+def list_to_binary_tree(arr: list[int] | None = None) -> TreeNode | None:
     if not arr:
         return
     return list_to_list_of_tree_nodes(arr)[0]
+
+class MyQueue:
+    def __init__(self):
+        self.stack1 = []
+        self.stack2 = []
+
+    def push(self, x: TreeNode) -> None:
+        self.stack1.append(x)
+
+    def pop(self) -> TreeNode:
+        if not self.stack2:
+            while self.stack1:
+                self.stack2.append(self.stack1.pop())
+        return self.stack2.pop()
+
+    def peek(self) -> TreeNode:
+        if not self.stack2:
+            while self.stack1:
+                self.stack2.append(self.stack1.pop())
+        return self.stack2[-1]
+
+    def empty(self) -> bool:
+        return not self.stack1 and not self.stack2
