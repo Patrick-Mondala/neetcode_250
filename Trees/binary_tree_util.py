@@ -13,7 +13,7 @@ def binary_tree_to_list_notation(root: TreeNode | None = None) -> list[int]:
     queue.push(root)
     real_nodes = 1
 
-    while queue and real_nodes:
+    while real_nodes:
         cur = queue.pop()
         res.append(cur.val)
 
