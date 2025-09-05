@@ -9,6 +9,8 @@ Constraints:
 '''
 from binary_tree_util import *
 
+# Time Complexity: O(N) where N is the size of our tree due to DFSing throuigh the entire tree
+# Space Complexity: O(N) where N is the size of our tree due to the call stack size from recursive DFS calls
 def invertTree(root: TreeNode | None = None) -> TreeNode | None:
     def dfs(node):
         if not node:
