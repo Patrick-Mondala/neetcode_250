@@ -11,7 +11,7 @@ Follow up: Recursive solution is trivial, could you do it iteratively?
 from binary_tree_util import *
 
 # Time Complexity: O(N) where N is the size of the tree due to DFSing once through the entire tree
-# Space Complexity: O(N) where N is the size of the tree due to recursive calls adding to call stack size
+# Space Complexity: O(1) due to using constant space
 def preorderTraversal(root: list[TreeNode]) -> list[int]:
     res = []
     cur = root
