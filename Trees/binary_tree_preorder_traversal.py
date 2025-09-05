@@ -14,15 +14,25 @@ from binary_tree_util import *
 # Space Complexity: O(N) where N is the size of the tree due to recursive calls adding to call stack size
 def preorderTraversal(root: list[TreeNode]) -> list[int]:
     res = []
+    cur = root
 
-    def dfs(node):
-        if not node:
-            return
-        res.append(node.val)
-        dfs(node.left)
-        dfs(node.right)
+    while cur:
+        if not cur.left:
+            res.append(cur.val)
+            cur = cur.right
+        else:
+            prev = cur.left
+            while prev.right and prev.right != cur:
+                prev = prev.right
 
-    dfs(root)
+            if not prev.right:
+                res.append(cur.val)
+                prev.right = cur
+                cur = cur.left
+            else:
+                prev.right = None
+                cur = cur.right
+
     return res
 
 # Test Cases
