@@ -12,17 +12,28 @@ Follow up: Recursive solution is trivial, could you do it iteratively?
 from binary_tree_util import *
 
 # Time Complexity: O(N) where N is the size of the tree due to making a single pass over all nodes in the tree
-# Space Complexity: O(N) where N is the size of the tree due to each recursive call to traverse the tree will be added to the callstack potentially to size N
+# Space Complexity: O(1) due to using constant extra space
 def inorderTraversal(root: TreeNode | None = None) -> list[int]:
     res = []
-    def dfs(node):
-        if not node:
-            return
-        dfs(node.left)
-        res.append(node.val)
-        dfs(node.right)
+    cur = root
 
-    dfs(root)
+    while cur:
+        if not cur.left:
+            res.append(cur.val)
+            cur = cur.right
+        else:
+            prev = cur.left
+            while prev.right and prev.right != cur:
+                prev = prev.right
+
+            if not prev.right:
+                prev.right = cur
+                cur = cur.left
+            else:
+                prev.right = None
+                res.append(cur.val)
+                cur = cur.right
+
     return res
 
 # Test Cases
