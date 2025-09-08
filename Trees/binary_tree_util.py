@@ -34,8 +34,11 @@ def binary_tree_to_list_notation(root: TreeNode | None = None) -> list[int]:
 
     return res
 
+# Also handles fucked up lists that dont strictly follow binary tree list notation
 def list_to_list_of_tree_nodes(arr: list | None = None) -> list[TreeNode]:
     res = []
+
+    process_later = MyQueue()
 
     for val in arr:
         if not val:
@@ -47,10 +50,29 @@ def list_to_list_of_tree_nodes(arr: list | None = None) -> list[TreeNode]:
         if res[i] == None:
             continue
         if i % 2 == 0:
-            res[i // 2 - 1].right = res[i]
+            node = res[i // 2 - 1]
+            if not node:
+                process_later.push((res[i], i))
+                continue
+            node.right = res[i]
         else:
-            res[i // 2].left = res[i]
+            node = res[i // 2]
+            if not node:
+                process_later.push((res[i], i))
+                continue
+            node.left = res[i]
     
+    while not process_later.empty():
+        node, idx = process_later.pop()
+        parent = (idx - 1) // 2
+        if not res[parent]:
+            parent += 2
+        
+        if idx % 2 == 0:
+            res[parent].right = node
+        else:
+            res[parent].right = node
+
     return res
 
 def list_to_binary_tree(arr: list[int] | None = None) -> TreeNode | None:
