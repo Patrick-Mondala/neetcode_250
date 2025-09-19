@@ -43,8 +43,7 @@ def run_tests(directory):
     print(bcolors.HEADER)
     print("========================================")
     print("Running tests for", get_directory_name_from_path(directory), "files")
-    print("========================================", end='')
-    print(bcolors.ENDC)
+    print("========================================" + bcolors.ENDC)
 
     for file in python_files:
         file_name = get_file_name_from_file(file)
@@ -63,8 +62,7 @@ def display_errors():
             print(bcolors.FAIL)
             print("=================================")
             print("Failed", get_directory_name_from_path(directory), "tests")
-            print("=================================", end='')
-            print(bcolors.ENDC)
+            print("=================================" + bcolors.ENDC)
 
             for file in error_files_by_directory[directory]:
                 file_name = get_file_name_from_file(file)
@@ -80,4 +78,13 @@ folders = list(map(lambda folder: "./" + folder[2:], folders))
 for folder in folders:
     run_tests(folder)
 
-display_errors()
+if error_files_by_directory:
+    display_errors()
+else:
+    print(bcolors.OKGREEN, bcolors.BOLD)
+    print()
+    print("*" * 38)
+    print("*", " " * 34, "*")
+    print("*", " " * 7, "All tests succeded." + bcolors.ENDC, bcolors.OKGREEN, " " * 5, "*")
+    print("*", " " * 34, "*")
+    print("*" * 38, bcolors.ENDC, "\n")
