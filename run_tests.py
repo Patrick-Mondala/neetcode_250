@@ -1,6 +1,14 @@
+import argparse
 import os
 from collections import defaultdict
 from pathlib import Path
+
+
+parser = argparse.ArgumentParser()
+parser.add_argument("-v", "--verbose", dest="verbose", default=False, help="Show errors", type=bool)
+parser.add_argument("-f", "--filename", dest="filename", default=None, help="Specify one file to run tests on", type=str)
+parser.add_argument("-d", "--directory", dest="directory", default="all", help="Specify folder of python files to run tests for", type=str)
+args = parser.parse_args()
 
 
 class bcolors:
@@ -54,6 +62,7 @@ def run_tests(directory):
             print()
         else:
             print_test_succeeded(file_name)
+    print()
 
 
 def display_errors():
@@ -67,20 +76,46 @@ def display_errors():
             for file in error_files_by_directory[directory]:
                 file_name = get_file_name_from_file(file)
 
-                print('--------------------------------------------------------------------------------------------------------')
-                os.system('py ' + file)
+                if args.verbose:
+                    print('--------------------------------------------------------------------------------------------------------')
+                    os.system('py ' + file)
                 print_test_failed(file_name)
-                print()
-
+                if args.verbose:
+                    print()
+        print()
 
 folders = list(filter(lambda folder: len(folder.split("\\")) == 2 and folder[2].isalpha() and folder[2].isupper(), ([x[0] for x in os.walk('.')])))
 folders = list(map(lambda folder: "./" + folder[2:], folders))
-for folder in folders:
+
+if args.filename:
+    args.verbose = True
+    file = args.filename
+    filename = file.split("\\")[2]
+
+    if os.system('py "' + file + '"'):
+        print(bcolors.FAIL)
+        print(filename,  "tests failed")
+        print(bcolors.ENDC)
+    else:
+        print(bcolors.OKGREEN, bcolors.BOLD)
+        print(filename, "tests succeded", bcolors.ENDC, bcolors.OKGREEN)
+        print(bcolors.ENDC)
+elif args.directory == "all":
+    for folder in folders:
+        run_tests(folder)
+else:
+    folder = args.directory
+    if folder[:2] == ".\\":
+        folder = './' + folder[2:]
+    if not folder[-1].isalpha():
+        folder = folder[:-1]
+    if folder not in folders:
+        raise ValueError("The folder \"" + folder + "\" does not exist")
     run_tests(folder)
 
-if error_files_by_directory:
+if error_files_by_directory and not args.filename:
     display_errors()
-else:
+elif not args.filename:
     print(bcolors.OKGREEN, bcolors.BOLD)
     print()
     print("*" * 38)
