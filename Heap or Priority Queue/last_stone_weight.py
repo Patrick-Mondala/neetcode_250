@@ -16,11 +16,23 @@ Constraints:
 1 <= stones.length <= 20
 1 <= stones[i] <= 100
 '''
+import heapq
 
+
+# Time Complexity: O(N * log(N)) where N is the size of stones, due to popping from and pushing to the heap twice N/2 times
+# Space Complexity: O(N) where N is the size of stones, due to storing the stones in a heap
 def lastStoneWeight(stones: list[int]) -> int:
-    """
-    Implement lastStoneWeight
-    """
+    r_stones = [-stone for stone in stones]
+    heapq.heapify(r_stones)
+
+    while len(r_stones) > 1:
+        heaviest_stone = -heapq.heappop(r_stones)
+        next_heaviest_stone = -heapq.heappop(r_stones)
+        if heaviest_stone == next_heaviest_stone:
+            continue
+        heapq.heappush(r_stones, -(heaviest_stone - next_heaviest_stone))
+
+    return -r_stones.pop() if r_stones else 0
 
 # Test Cases
 stones = [2,3,6,2,4]
