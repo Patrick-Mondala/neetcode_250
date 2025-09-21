@@ -15,18 +15,30 @@ Constraints:
 -1000 <= val <= 1000
 There will always be at least k integers in the stream when you search for the kth integer.
 '''
+import heapq
+
 
 class KthLargest:
 
+    # Time Complexity: O(N) where N is the length of nums due to heapifying nums
+    # Space Complexity: O(K) due to storing up to K numbers in the heap
     def __init__(self, k: int, nums: list[int]):
-        """
-        Implement KthLargest init
-        """
+        self.k = k
+        self.heap = nums
+        heapq.heapify(self.heap)
 
+        while len(self.heap) > k:
+            heapq.heappop(self.heap)
+
+    # Time Complexity: O(Mlog(K)) where M is the number of add operations, due to pushing to the heap every time we add a number
+    # Space Complexity: O(K) due to the heap storing up to K numbers
     def add(self, val: int) -> int:
-        """
-        Implement add
-        """
+        heapq.heappush(self.heap, val)
+        
+        while len(self.heap) > self.k:
+            heapq.heappop(self.heap)
+
+        return self.heap[0]
 
 # Test Cases
 kthLargest = KthLargest(3, [1, 2, 3, 3])
