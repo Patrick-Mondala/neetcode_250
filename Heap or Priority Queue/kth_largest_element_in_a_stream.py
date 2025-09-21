@@ -30,7 +30,7 @@ class KthLargest:
         while len(self.heap) > k:
             heapq.heappop(self.heap)
 
-    # Time Complexity: O(Mlog(K)) where M is the number of add operations, due to pushing to the heap every time we add a number
+    # Time Complexity: O(M * log(K)) where M is the number of add operations, due to pushing to the heap every time we add a number
     # Space Complexity: O(K) due to the heap storing up to K numbers
     def add(self, val: int) -> int:
         heapq.heappush(self.heap, val)
