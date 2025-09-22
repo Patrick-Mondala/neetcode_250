@@ -18,13 +18,12 @@ Constraints:
 # Time Complexity: O(2^N) where N is the size of nums, due to recursively iterating over each element in nums and branching between including or excluding it
 # Space Complexity: O(N) where N is the size of nums, due to the recursive calls adding to the callstack with a max height of N
 def subsetXORSum(nums: list[int]) -> int:
-    def dfs(i, total):
-        if i == len(nums):
-            return total
+    res = 0
 
-        return dfs(i + 1, total ^ nums[i]) + dfs(i + 1, total)
+    for num in nums:
+        res = res | num
 
-    return dfs(0, 0)
+    return res * 2**(len(nums) - 1)
 
 # Test Cases
 nums = [2,4]
