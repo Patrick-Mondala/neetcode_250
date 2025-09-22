@@ -17,10 +17,33 @@ grid[i][j] is 0 or 1.
 There is exactly one island in grid.
 '''
 
+# Time Complexity: O(N * M) where N is the size of a row in the grid, and M is the size of a column in the grid, due to iterating over every cell in the grid
+# Space Complexity: O(1) due to using constant extra space
 def islandPerimeter(grid: list[list[int]]) -> int:
-    """
-    Implement islandPerimeter
-    """
+    ROW_SIZE = len(grid)
+    COL_SIZE = len(grid[0])
+    DIR = [[1, 0], [-1, 0], [0, 1], [0, -1]]
+    result = 0
+
+    def getPerimeter(row, col):
+        perimeter = 0
+
+        for r, c in DIR:
+            if row + r < 0 or row + r == ROW_SIZE:
+                perimeter += 1
+            elif col + c < 0 or col + c == COL_SIZE:
+                perimeter += 1
+            elif grid[row + r][col + c] == 0:
+                perimeter += 1
+        
+        return perimeter
+    
+    for row in range(ROW_SIZE):
+        for col in range(COL_SIZE):
+            if grid[row][col]:
+                result += getPerimeter(row, col)
+
+    return result
 
 # Test Cases
 grid = [
