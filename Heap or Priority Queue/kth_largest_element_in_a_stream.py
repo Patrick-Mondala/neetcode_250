@@ -24,21 +24,18 @@ class KthLargest:
     # Space Complexity: O(K) due to storing up to K numbers in the heap
     def __init__(self, k: int, nums: list[int]):
         self.k = k
-        self.heap = nums
-        heapq.heapify(self.heap)
-
-        while len(self.heap) > k:
-            heapq.heappop(self.heap)
+        self.nums = nums
+        heapq.heapify(nums)
 
     # Time Complexity: O(M * log(K)) where M is the number of add operations, due to pushing to the heap every time we add a number
     # Space Complexity: O(K) due to the heap storing up to K numbers
     def add(self, val: int) -> int:
-        heapq.heappush(self.heap, val)
+        heapq.heappush(self.nums, val)
         
-        while len(self.heap) > self.k:
-            heapq.heappop(self.heap)
+        while len(self.nums) > self.k:
+            heapq.heappop(self.nums)
 
-        return self.heap[0]
+        return self.nums[0] if self.nums else None
 
 # Test Cases
 kthLargest = KthLargest(3, [1, 2, 3, 3])
