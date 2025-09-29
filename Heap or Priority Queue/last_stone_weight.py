@@ -22,17 +22,19 @@ import heapq
 # Time Complexity: O(N * log(N)) where N is the size of stones, due to popping from and pushing to the heap twice N/2 times
 # Space Complexity: O(N) where N is the size of stones, due to storing the stones in a heap
 def lastStoneWeight(stones: list[int]) -> int:
-    r_stones = [-stone for stone in stones]
-    heapq.heapify(r_stones)
+    stones = [-stone for stone in stones]
+    heapq.heapify(stones)
 
-    while len(r_stones) > 1:
-        heaviest_stone = -heapq.heappop(r_stones)
-        next_heaviest_stone = -heapq.heappop(r_stones)
-        if heaviest_stone == next_heaviest_stone:
+    while len(stones) > 1:
+        large = abs(heapq.heappop(stones))
+        next_large = abs(heapq.heappop(stones))
+
+        if large == next_large:
             continue
-        heapq.heappush(r_stones, -(heaviest_stone - next_heaviest_stone))
-
-    return -r_stones.pop() if r_stones else 0
+        
+        heapq.heappush(stones, -(large - next_large))
+    
+    return abs(stones[0]) if stones else 0
 
 # Test Cases
 stones = [2,3,6,2,4]
