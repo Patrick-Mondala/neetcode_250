@@ -10,9 +10,15 @@ Constraints:
 '''
 
 def climbStairs(n: int) -> int:
-    """
-    Implement climbStairs
-    """
+    prev = 2
+    prev_prev = 1
+    
+    for _ in range(3, n + 1):
+        temp = prev + prev_prev
+        prev_prev = prev
+        prev = temp
+
+    return prev
 
 # Test Cases
 n = 2
