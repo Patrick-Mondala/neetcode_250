@@ -12,10 +12,13 @@ Constraints:
 0 <= cost[i] <= 100
 '''
 
+# Time Complexity: O(N) where N is the length of cost due to iterating over the costs
+# Space Complexity: O(1) due to using constant extra space (none)
 def minCostClimbingStairs(cost: list[int]) -> int:
-    """
-    Implement minCostClimbingStairs
-    """
+    for i in range(len(cost) - 3, -1, -1):
+        cost[i] += min(cost[i + 1], cost[i + 2])
+
+    return min(cost[0], cost[1])
 
 # Test Cases
 cost = [1,2,3]
