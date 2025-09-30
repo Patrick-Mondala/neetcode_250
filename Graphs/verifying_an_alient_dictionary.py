@@ -12,6 +12,8 @@ order.length == 26
 All characters in words[i] and order are English lowercase letters.
 '''
 
+# Time Complexity: O(N + C) where N is the length of words due to iterating over the words list, and C is the total characters in words due to iterating over every character in each word
+# Space Complexity: O(1) due to using constant extra space (a dictionary of size 26)
 def isAlienSorted(words: list[str], order: str) -> bool:
     alien_ord = {char: i for i, char in enumerate(order)}
 
