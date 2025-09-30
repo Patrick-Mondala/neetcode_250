@@ -13,9 +13,27 @@ All characters in words[i] and order are English lowercase letters.
 '''
 
 def isAlienSorted(words: list[str], order: str) -> bool:
-    """
-    Implement isAlienSorted
-    """
+    alien_ord = {char: i for i, char in enumerate(order)}
+
+    for i in range(1, len(words)):
+        word = words[i]
+        prev_word = words[i - 1]
+        
+        if get_word_value(word, alien_ord) < get_word_value(prev_word, alien_ord):
+            return False
+    
+    return True
+
+
+def get_word_value(word: str, alien_ord: dict) -> int:
+        res = 0
+
+        counter = 100
+        for char in word:
+            res += alien_ord[char] * (10 ** counter)
+            counter -= 1
+
+        return res
 
 # Test Cases
 words = ["dag","disk","dog"]
