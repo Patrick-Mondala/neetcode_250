@@ -9,6 +9,8 @@ Constraints:
 1 <= n <= 30
 '''
 
+# Time Complexity: O(N) where N is how many stairs there are, due to iterating from 3 up to N
+# Space Complexity: O(1) due to using constant extra space
 def climbStairs(n: int) -> int:
     prev = 2
     prev_prev = 1
