@@ -17,10 +17,19 @@ class Interval(object):
         self.end = end
 
 
+# Time Complexity: O(N * log(N)) where N is the length of intervals due to sorting the intervals list
+# Space Complexity: O(1) due to using constant extra space
 def canAttendMeetings(intervals: list[Interval]) -> bool:
-    """
-    Implement canAttendMeetings
-    """
+    intervals.sort(key = lambda interval: interval.start)
+
+    for i in range(1, len(intervals)):
+        prev_end = intervals[i - 1].end
+        cur_start = intervals[i].start
+
+        if cur_start < prev_end:
+            return False
+
+    return True
 
 # Test Cases
 intervals = [(0,30),(5,10),(15,20)]
