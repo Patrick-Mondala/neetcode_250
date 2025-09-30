@@ -12,10 +12,18 @@ Constraints:
 The answer is guaranteed to fit within a 32-bit integer, ie. answer <= 2^31 - 1.
 '''
 
+# Time Complexity: O(N) due to iterating from 3 up to N
+# Space Complexity: O(1) due to using constant extra space
 def tribonacci(n: int) -> int:
-    """
-    Implement tribonacci
-    """
+    t = [0, 1, 1]
+
+    if n < 3:
+        return t[n]
+
+    for i in range(3, n + 1):
+        t[i % 3] = sum(t)
+
+    return t[n % 3]
 
 # Test Cases
 n = 3
