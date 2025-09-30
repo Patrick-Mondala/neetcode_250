@@ -12,10 +12,29 @@ Constraints:
 bills[i] is either 5, 10, or 20.
 '''
 
+# Time Complexity: O(N) where N is the length of bills due to iterating over every bill we receive
+# Space Complexity: O(1) due to using constant extra space
 def lemonadeChange(bills: list[int]) -> bool:
-    """
-    Implement lemonadeChange
-    """
+    fives = 0
+    tens = 0
+
+    for bill in bills:
+        if bill == 5:
+            fives += 1
+        if bill == 10:
+            tens += 1
+            fives -= 1
+        if bill == 20:
+            if tens > 0:
+                tens -= 1
+                fives -= 1
+            else:
+                fives -= 3
+        
+        if fives < 0 or tens < 0:
+            return False
+    
+    return True
 
 # Test Cases
 bills = [5,10,5,5,20]
